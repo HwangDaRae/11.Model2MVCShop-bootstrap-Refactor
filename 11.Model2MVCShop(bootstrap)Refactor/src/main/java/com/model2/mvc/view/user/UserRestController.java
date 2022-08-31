@@ -112,4 +112,12 @@ public class UserRestController {
 		return list;
 	}
 	
+	@RequestMapping( value = "autocompleteUser", method = RequestMethod.POST )
+	public List<String> autocompleteUser( @RequestBody Search search ) throws Exception {
+		System.out.println("/autocompleteUser : POST");
+		return userService.autocompleteUser(search);
+	}
+	
 }
+
+

@@ -51,4 +51,9 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectOne("UserMapper.getTotalCount", search);
 	}
 
+	@Override
+	public List<String> autocompleteUser(Search search) throws Exception {
+		return sqlSession.selectList("UserMapper.autocompleteUser", search);
+	}
+
 }

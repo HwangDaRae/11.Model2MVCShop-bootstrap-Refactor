@@ -42,10 +42,10 @@
 		UPDATE users
 		<set>
 			user_name = #{userName} ,
-			cell_phone = #{phone},
+			password = #{password} ,
+			cell_phone = #{phone} ,
 			addr = #{addr} ,
-			email =
-			#{email}
+			email = #{email}
 		</set>
 		WHERE user_id = #{userId}
 	</update>
@@ -89,6 +89,16 @@
 			</where>
 		</if>
 		) countTable
+	</select>
+	
+	<select id="autocompleteUser" parameterType="com.model2.mvc.common.Search" resultType="string">
+		<if test="searchCondition == 0">
+			SELECT DISTINCT user_id
+		</if>
+		<if test="searchCondition == 1">
+			SELECT DISTINCT user_name
+		</if>
+		FROM users
 	</select>
 
 </mapper>

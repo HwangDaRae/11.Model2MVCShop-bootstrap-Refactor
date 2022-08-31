@@ -96,7 +96,7 @@ public class PurchaseController {
 	
 	@RequestMapping(value = "listPurchase", method = RequestMethod.POST )
 	public ModelAndView listPurchase(Search searchVO, HttpSession session, Model model ) throws Exception {
-		System.out.println("/purchase/listPurchase : GET");
+		System.out.println("/purchase/listPurchase : POST");
 		
 		String userId = ((User)session.getAttribute("user")).getUserId();
 		

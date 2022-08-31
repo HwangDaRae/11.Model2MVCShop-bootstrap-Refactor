@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	@Override
+	public List<String> autocompleteUser(Search search) throws Exception {
+		return userDao.autocompleteUser(search);
+	}
+
 }

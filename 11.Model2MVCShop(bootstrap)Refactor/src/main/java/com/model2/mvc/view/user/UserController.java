@@ -107,7 +107,6 @@ public class UserController {
 		return "redirect:/user/loginView.jsp";
 	}
 	
-	//@RequestMapping("/login.do")
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
 		
