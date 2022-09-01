@@ -88,8 +88,8 @@ CREATE TABLE Upload_File (
 
 
 
-INSERT INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) VALUES ( 'admin', 'admin', '1234', 'admin', NULL, '010-9999-9999', '서울시 서초구', 'admin@mvc.com',to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS')); 
-INSERT INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) VALUES ( 'manager', 'manager', '1234', 'admin', NULL, '010-8888-8888', NULL, 'manager@mvc.com', to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));     
+INSERT INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) VALUES ( 'admin', 'admin이름', '1234', 'admin', NULL, '010-9999-9999', '서울시 서초구', 'admin@mvc.com',to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS')); 
+INSERT INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) VALUES ( 'manager', 'manager이름', '1234', 'admin', NULL, '010-8888-8888', NULL, 'manager@mvc.com', to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));     
 INSERT INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) VALUES ( 'non-member', 'non-member', 'non-member', 'non', NULL, NULL, NULL, 'manager@mvc.com', to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));        
 INSERT INTO users VALUES ( 'user01', 'user01', '1111', 'user', NULL, '010-0000-0101', '서울 강서', 'user01@mvc.com', sysdate);
 INSERT INTO users VALUES ( 'user02', 'user02', '2222', 'user', NULL, '010-0000-0202', '서울 양천구', 'user02@mvc.com', sysdate); 

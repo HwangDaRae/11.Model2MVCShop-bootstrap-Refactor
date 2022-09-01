@@ -209,9 +209,9 @@ $(function(){
 								<td align="left">
 									<input type="button" value="-">
 									<b id="result">${ list[i].amount }</b>
-									<input type="text" id="amount" name="amount" value="${ list[i].amount }">
-									<input type="text" id="prodAmount" value="${ list[i].prod_amount }">
-									<input type="text" id="addPurchaseCheckBox" name="addPurchaseCheckBox" value="${ list[i].prod_no }">
+									<input type="hidden" id="amount" name="amount" value="${ list[i].amount }">
+									<input type="hidden" id="prodAmount" value="${ list[i].prod_amount }">
+									<input type="hidden" id="addPurchaseCheckBox" name="addPurchaseCheckBox" value="${ list[i].prod_no }">
 									<input type="button" value="+">
 									<b id="limit"></b>
 								</td>

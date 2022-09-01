@@ -42,7 +42,7 @@
 			
 			$("input[value='-']").bind("click",function(){
 				number--;
-				if( number == 0 ){
+				if( parseInt(number) == 0 ){
 					number = 1;
 				}else{
 					$("#limit").text(" ");
@@ -52,9 +52,9 @@
 			})
 			
 			$("input[value='+']").bind("click",function(){
-				if(number < productAmount){
+				if(parseInt(number) < parseInt(productAmount)){
 					number++;
-				}else if(number == productAmount){
+				}else if(parseInt(number) == parseInt(productAmount)){
 					$("#limit").text("더이상 구매하실 수 없습니다");
 					return;
 				}
@@ -62,16 +62,18 @@
 				$("#result").text(number);
 			})
 			
-			$("button:contain('장바구니 담기')").bind("click",function(){
+			$("button:contains('장바구니 담기')").bind("click",function(){
 				if(confirm('장바구니에 담으시겠습니까?')){
 					$("form").attr("method","post").attr("action","/cart/addCart").submit();
 				}
 			});
-			$("button:contain('구매')").bind("click",function(){
+			
+			$("button:contains('구매')").bind("click",function(){
 				$("form").attr("method","post").attr("action","/purchase/addPurchaseView").submit();
 			});
-			$("button:contain('이전')").bind("click",function(){
-				history.go(-1);
+			
+			$("button:contains('이전')").bind("click",function(){
+				history.back();
 			});
 		});
 	</script>
@@ -172,9 +174,11 @@
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">장바구니 담기</button>
-	  			<button type="button" class="btn btn-primary">구매</button>
-	  			<button type="button" class="btn btn-primary">이전</button>
+	  			<c:if test="${ user.role != 'admin' }">
+		  			<button type="button" class="btn btn-primary">장바구니 담기</button>
+	  				<button type="button" class="btn btn-primary">구매</button>
+	  			</c:if>
+	  				<button type="button" class="btn btn-primary">이전</button>
 	  		</div>
 		</div>
 		

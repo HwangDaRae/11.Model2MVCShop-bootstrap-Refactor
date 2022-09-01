@@ -49,6 +49,15 @@
    	
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
+
+		//============= 상품 검색 ==============
+		function fncSearch(){
+			alert('a');
+			$("a[href='#']:contains('상품검색')").bind(function(){
+				//$(self.location).attr("method","post").attr("action","/product/listProduct").submit();
+				self.location = "/product/listProduct";
+			});
+		}
 		
 		//============= 로그인 화면이동 =============
 		$( function() {
@@ -300,11 +309,11 @@
 			<div class="col-md-3">
 		        
 		       	<!--  회원관리 목록에 제목 -->
-				<div class="panel panel-primary">
+				<!-- <div class="panel panel-primary">
 					<div class="panel-heading">
 						<i class="glyphicon glyphicon-heart"></i> 회원관리
          			</div>
-         			<!--  회원관리 아이템 -->
+         			 회원관리 아이템
 					<ul class="list-group">
 						 <li class="list-group-item">
 						 	<a href="#">개인정보조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
@@ -313,10 +322,10 @@
 						 	<a href="#">회원정보조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 					</ul>
-		        </div>
+		        </div> -->
                
                
-				<div class="panel panel-primary">
+				<!-- <div class="panel panel-primary">
 					<div class="panel-heading">
 							<i class="glyphicon glyphicon-briefcase"></i> 판매상품관리
          			</div>
@@ -328,20 +337,20 @@
 						 	<a href="#">판매상품관리</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 					</ul>
-		        </div>
+		        </div> -->
                
                
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-							<i class="glyphicon glyphicon-shopping-cart"></i> 상품구매
+							<i class="glyphicon glyphicon-shopping-cart"></i> 비회원
 	    			</div>
 					<ul class="list-group">
-						 <li class="list-group-item"><a href="#">상품검색</a></li>
+						 <li class="list-group-item"><a href="/product/listProduct/search">상품검색</a></li>
 						  <li class="list-group-item">
-						  	<a href="#">구매이력조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						  	<a href="/purchase/nonMemberPurchase">비회원주문조회</a></i>
 						  </li>
 						 <li class="list-group-item">
-						 	<a href="#">최근본상품</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						 	<a href="/cart/listCart">장바구니</a></i>
 						 </li>
 					</ul>
 				</div>

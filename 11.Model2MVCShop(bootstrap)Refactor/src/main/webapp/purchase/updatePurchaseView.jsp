@@ -80,8 +80,8 @@ $(function(){
 		<td width="104" class="ct_write">구매자아이디</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">${ purchaseVO.buyer.userId }</td>
-		<input type="text" name="buyerId" value="${ purchaseVO.buyer.userId }">
-		<input type="text" name="price" value="${ productVO.price }">
+		<input type="hidden" name="buyerId" value="${ purchaseVO.buyer.userId }">
+		<input type="hidden" name="price" value="${ productVO.price }">
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -162,9 +162,9 @@ $(function(){
 		<td class="ct_write01">
 			<input type="button" value="-">
 			<b id="result">${ purchaseVO.amount }</b>
-			<input type="text" id="amount" name="amount" value="${ purchaseVO.amount }">
-			<input type="text" id="productAmount" name="productAmount" value="${ productVO.amount }">
-			<input type="text" name="tranNo" value="${ purchaseVO.tranNo }">
+			<input type="hidden" id="amount" name="amount" value="${ purchaseVO.amount }">
+			<input type="hidden" id="productAmount" name="productAmount" value="${ productVO.amount }">
+			<input type="hidden" name="tranNo" value="${ purchaseVO.tranNo }">
 			<input type="button" value="+">
 			<b id="limit"></b>
 		</td>

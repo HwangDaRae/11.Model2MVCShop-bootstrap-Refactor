@@ -30,7 +30,7 @@ $(function(){
 <table id="dataTable" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 	<tr>
 		<td colspan="11">
-			<input type="text" value="${ purList[0].totalPrice }">
+			<input type="hidden" value="${ purList[0].totalPrice }">
 		</td>
 	
 	</tr>
@@ -53,8 +53,8 @@ $(function(){
 	<c:if test="${ fn:length(proList) > 0 }">
 		<c:forEach var="i" begin="0" end="${ size-1 }" step="1">
 		
-			구매 상품번호 : <input type="text" name="productNo" value="${ purList[i].purchaseProd.prodNo }">
-			구매 상품수량 : <input type="text" name="amount" value="${ purList[i].amount }">
+			<input type="hidden" name="productNo" value="${ purList[i].purchaseProd.prodNo }">
+			<input type="hidden" name="amount" value="${ purList[i].amount }">
 		
 			<tr class="ct_list_pop" id="divDataId">
 				<td align="center"><img height="250" width="250" src="/images/uploadFiles/${ uploadList[i] }"/></td>

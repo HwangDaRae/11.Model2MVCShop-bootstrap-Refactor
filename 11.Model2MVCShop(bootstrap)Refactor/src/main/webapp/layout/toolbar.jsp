@@ -45,6 +45,10 @@
 		
 	 	$( "a:contains('구매이력조회')" ).on("click" , function() {
 			$(self.location).attr("href","/purchase/listPurchase");
+		}); 
+		
+	 	$( "a:contains('배 송 관 리')" ).on("click" , function() {
+	 		self.location = "/purchase/deliveryManage/search";
 		});
 	});
 		
@@ -116,6 +120,9 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#">상 품 검 색</a></li>
+						<c:if test="${sessionScope.user.role == 'admin'}">
+							<li><a href="#">배 송 관 리</a></li>
+						</c:if>
 
 						<c:if test="${sessionScope.user.role == 'user'}">
 							<li><a href="#">구매이력조회</a></li>

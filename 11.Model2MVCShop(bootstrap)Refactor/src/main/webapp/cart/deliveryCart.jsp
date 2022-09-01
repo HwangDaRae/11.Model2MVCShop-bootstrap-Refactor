@@ -75,8 +75,8 @@ $(function(){
 					<c:if test="${ fn:length(purList) > 0 }">
 						<c:forEach var="i" begin="0" end="${ size-1 }" step="1">
 						
-							<input type="text" name="productNo" value="${ purList[i].purchaseProd.prodNo }">
-							<input type="text" name="amountArr" value="${ purList[i].amount }">
+							<input type="hidden" name="productNo" value="${ purList[i].purchaseProd.prodNo }">
+							<input type="hidden" name="amountArr" value="${ purList[i].amount }">
 							
 							<tr class="ct_list_pop" id="divDataId">
 								<td align="center"><img height="250" width="250" src="/images/uploadFiles/${ uploadList[i] }"/></td>

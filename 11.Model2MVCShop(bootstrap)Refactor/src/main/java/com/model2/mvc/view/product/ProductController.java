@@ -69,7 +69,7 @@ public class ProductController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
-	@RequestMapping(value = "listProduct/{menu}", method = RequestMethod.GET) 
+	@RequestMapping(value = "listProduct/{menu}", method = RequestMethod.GET)
 	public String listProduct( @PathVariable String menu, Model model, HttpSession session, Search search) throws Exception {
 		System.out.println("/product/listProduct : GET");
 		System.out.println(search);
@@ -189,9 +189,9 @@ public class ProductController {
 	public String getProduct(@PathVariable int prodNo, @PathVariable String menu, Model model ) throws Exception {
 		System.out.println("/getProduct : GET");
 		List<Upload> uploadList = uploadServiceImpl.getUploadFile(productServiceImpl.getProduct(prodNo).getFileName());
-		
+		System.out.println(productServiceImpl.getProduct(prodNo));
 		model.addAttribute("productVO", productServiceImpl.getProduct(prodNo));
-		model.addAttribute("uploadList", uploadList);
+		model.addAttribute("uploadReturnList", uploadList);
 		model.addAttribute("count", uploadList.get(0).getFileCount());
 		return "forward:/product/getProduct.jsp";
 	}
@@ -282,7 +282,7 @@ public class ProductController {
 				uploadVO.setFileCount(multiFileList.size());
 				uploadVO.setFile_path("C:\\Users\\903-19\\git\\11.Model2MVCShop-bootstrap-Refactor\\11.Model2MVCShop(bootstrap)Refactor\\src\\main\\webapp\\images\\uploadFiles\\");
 				
-				uploadList.add(uploadVO);				
+				uploadList.add(uploadVO);
 			}
 		}//end of for
 		

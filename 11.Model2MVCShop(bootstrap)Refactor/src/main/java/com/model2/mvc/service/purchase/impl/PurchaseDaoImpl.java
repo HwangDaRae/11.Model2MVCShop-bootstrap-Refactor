@@ -75,4 +75,10 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		sqlSession.update("PurchaseMapper.updateTranCode", map);
 	}
 
+	// 배송관리
+	@Override
+	public void getdeliveryManageList() throws Exception {
+		sqlSession.selectList("PurchaseMapper.getdeliveryManageList");
+	}
+
 }

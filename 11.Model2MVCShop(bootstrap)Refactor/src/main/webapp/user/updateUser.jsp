@@ -80,6 +80,15 @@
 			
 			var password = $("input[name='password']").val();
 			var password2 = $("input[name='password2']").val();
+			
+			if(password == null || password.length <1){
+				alert("비밀번호는  반드시 입력하셔야 합니다.");
+				return;
+			}
+			if(password2 == null || password2.length <1){
+				alert("비밀번호 확인은  반드시 입력하셔야 합니다.");
+				return;
+			}
 			if( password != password2 ){
 				alert("비밀번호가 일치하지 않습니다");
 				return;
