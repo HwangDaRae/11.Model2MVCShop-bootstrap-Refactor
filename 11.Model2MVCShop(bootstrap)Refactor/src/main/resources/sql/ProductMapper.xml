@@ -80,7 +80,7 @@
 	SELECT *
 	FROM ( SELECT ROWNUM AS row_n, vt1.*
 			FROM ( SELECT vt.* 
-					FROM ( SELECT ROW_NUMBER() OVER(PARTITION BY p.prod_no ORDER BY t.order_data desc) as r, p.image_file, p.amount, p.prod_no, p.prod_name, p.price, p.reg_date, nvl(tran_status_code, 0) as proTranCode
+					FROM ( SELECT ROW_NUMBER() OVER(PARTITION BY p.prod_no ORDER BY t.order_data desc) as r, p.image_file, p.amount, p.prod_no, p.prod_name, p.prod_detail, p.price, p.reg_date, nvl(tran_status_code, 0) as proTranCode
 							FROM transaction t, product p 
 							WHERE t.prod_no(+)=p.prod_no ) vt 
 			 		WHERE r = 1
@@ -113,7 +113,17 @@
 	
 	
 	<select id="autocompleteProduct" resultType="string">
-		SELECT DISTINCT prod_name FROM product
+		SELECT DISTINCT
+		<if test="searchCondition == 0">
+			prod_no
+		</if>
+		<if test="searchCondition == 1">
+			prod_name
+		</if>
+		<if test="searchCondition == 2">
+			price
+		</if>
+		FROM product
 	</select>
   	
 </mapper>

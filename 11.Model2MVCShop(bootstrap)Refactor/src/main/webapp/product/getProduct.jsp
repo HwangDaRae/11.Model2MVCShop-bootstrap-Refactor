@@ -1,277 +1,189 @@
-<%@page import="java.net.URLDecoder"%>
-<%@page import="java.net.URLEncoder"%>
-<%@page import="com.model2.mvc.service.domain.Product"%>
-<%@page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<script src="//code.jquery.com/jquery-2.1.4.js" type="text/javascript"></script>
-<script type="text/javascript">
 
-$(function(){
-	var productAmount = $("#productAmount").val();
-	var number = $("#result").text();
+<!DOCTYPE html>
+
+<html lang="ko">
 	
-	$("input[value='-']").bind("click",function(){
-		number--;
-		if( number == 0 ){
-			number = 1;
-		}else{
-			$("#limit").text(" ");
-		}
-		$("#amount").val(number);
-		$("#result").text(number);
-	})
-	
-	$("input[value='+']").bind("click",function(){
-		if(number < productAmount){
-			number++;
-		}else if(number == productAmount){
-			$("#limit").text("더이상 구매하실 수 없습니다");
-			return;
-		}
-		$("#amount").val(number);
-		$("#result").text(number);
-	})
-		
-	$("td.ct_btn01:contains('장바구니 담기')").bind("click",function(){
-		if(confirm('장바구니에 담으시겠습니까?')){
-			$("form").submit();
-		}
-	})
-	
-	$("td.ct_btn01:contains('구매')").bind("click",function(){
-		$("form").attr("action","/purchase/addPurchaseView").submit();
-	})
-	
-	$("td.ct_btn01:contains('이전')").bind("click",function(){
-		history.go(-1)
-	})
-});
-
-</script>
-
-<%--
-Product vo = (Product)request.getAttribute("productVO");
-System.out.println(vo);
-//상품번호를 쿠키에 담는다
-String history = "";
-
-Cookie[] cookies = request.getCookies();
-
-if(cookies != null && cookies.length > 0) {
-	for (int i = 0; i < cookies.length; i++) {
-		if(cookies[i].getName().equals("prodInfoCookie")) {
-			history = URLDecoder.decode(cookies[i].getValue()) + "," + vo.getProdNo();
-		}
-	}			
-}
-
-if(history.isEmpty()) {
-	history = vo.getProdNo()+"";
-}
-
-Cookie cookie = new Cookie("prodInfoCookie", URLEncoder.encode(history));
-cookie.setMaxAge(24*60*60);
-response.addCookie(cookie);
---%>
-
-<html>
 <head>
-<meta charset="EUC-KR">
-
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-
-<title>Insert title here</title>
+	<meta charset="EUC-KR">
+	
+	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/css/animate.min.css" rel="stylesheet">
+   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+ 		body {
+            padding-top : 50px;
+        }
+     </style>
+    
+     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<script type="text/javascript">
+		$(function(){
+			var productAmount = $("#productAmount").val();
+			var number = $("#result").text();
+			
+			$("input[value='-']").bind("click",function(){
+				number--;
+				if( number == 0 ){
+					number = 1;
+				}else{
+					$("#limit").text(" ");
+				}
+				$("#amount").val(number);
+				$("#result").text(number);
+			})
+			
+			$("input[value='+']").bind("click",function(){
+				if(number < productAmount){
+					number++;
+				}else if(number == productAmount){
+					$("#limit").text("더이상 구매하실 수 없습니다");
+					return;
+				}
+				$("#amount").val(number);
+				$("#result").text(number);
+			})
+			
+			$("button:contain('장바구니 담기')").bind("click",function(){
+				if(confirm('장바구니에 담으시겠습니까?')){
+					$("form").attr("method","post").attr("action","/cart/addCart").submit();
+				}
+			});
+			$("button:contain('구매')").bind("click",function(){
+				$("form").attr("method","post").attr("action","/purchase/addPurchaseView").submit();
+			});
+			$("button:contain('이전')").bind("click",function(){
+				history.go(-1);
+			});
+		});
+	</script>
+	
 </head>
 
-<body bgcolor="#ffffff" text="#000000">
+<body>
+	<form name="detailForm" method="post" action="/cart/addCart">
 
-<form name="detailForm" method="post" action="/cart/addCart">
-
-<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
-	<tr>
-		<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"	width="15" height="37"></td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="93%" class="ct_ttl01">상품상세조회</td>
-					<td width="20%" align="right">&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif"  width="12" height="37"/>
-		</td>
-	</tr>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 13px;">
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			상품번호 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="105">${ productVO.prodNo }</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${ productVO.prodName }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${ productVO.prodDetail }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">제조일자</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${ productVO.manuDate }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">가격</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${ productVO.price }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">등록일자</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${ productVO.regDate }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">구매수량</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input type="button" value="-">
-			<b id="result">1</b>
-			<input type="hidden" id="amount" name="amount" value="1">
-			<input type="hidden" id="productAmount" name="productAmount" value="${ productVO.amount }">
-			<input type="hidden" name="prod_no" value="${ productVO.prodNo }">
-			<input type="button" value="+">
-			<b id="limit"></b>
-		</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			상품이미지 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<!-- 테이블 시작 -->
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td height="26">
-						<c:if test="${ count > 0 }">
-							<c:forEach var="i" items="${ uploadList }" begin="0" step="1" end="${ count-1 }">
-								<b id="123">
-									<img src="/images/uploadFiles/${ i.fileName }"/><br/>
-									${ i.fileName }<br/>
-								</b>
-							</c:forEach>
-						</c:if>
-						<c:if test="${ count <= 0 }">
-						이미지없음
-						</c:if>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-</table>
-
-
-
-<table width="100%" border="0" cellspacing="0" style="margin-top: 10px;">
-	<tr>
-		<td width="53%"></td>
-		<td align="right">
-
-		<table border="0" cellspacing="0">
-			<tr>
-			
-				<c:if test="${ sessionScope.user.userId == 'non-member' }">userId == non-member</c:if>
-				<c:if test="${ sessionScope.user.userId != 'non-member' }">userId != non-member</c:if>
-				<c:if test="${ sessionScope.user.role == 'user' }">role == user</c:if>
-				<c:if test="${ sessionScope.user.role != 'user' }">role != user</c:if>
-				
-				<c:if test="${ sessionScope.user.userId == 'non-member' || sessionScope.user.role == 'user' }">
-			
-				<td width="17" height="23">
-					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>
-				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					장바구니 담기
-				</td>
-				<td width="14" height="23">
-					<img src="/images/ct_btnbg03.gif" width="14" height="23">
-				</td>
-				<td width="30"></td>
-				
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						구매
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23">
-					</td>
-					<td width="30"></td>
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/toolbar.jsp" />
+   	<!-- ToolBar End /////////////////////////////////////-->
+	
+	<!--  화면구성 div Start /////////////////////////////////////-->
+	<div class="container">
+	
+		<div class="page-header">
+	       <h3 class=" text-info">상품상세조회</h3>
+	    </div>
+	
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2"><strong>상품번호</strong></div>
+			<div class="col-xs-8 col-md-4">${ productVO.prodNo }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>상품명</strong></div>
+			<div class="col-xs-8 col-md-4">${ productVO.prodName }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>상품상세정보</strong></div>
+			<div class="col-xs-8 col-md-4">${ productVO.prodDetail }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>제조일자</strong></div>
+			<div class="col-xs-8 col-md-4">${ productVO.manuDate }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2"><strong>가격</strong></div>
+			<div class="col-xs-8 col-md-4">${ productVO.price }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>등록일자</strong></div>
+			<div class="col-xs-8 col-md-4">${ productVO.regDate }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>구매수량</strong></div>
+			<div class="col-xs-8 col-md-4">
+				<input type="button" value="-">
+				<b id="result">1</b>
+				<input type="hidden" id="amount" name="amount" value="1">
+				<input type="hidden" id="productAmount" name="productAmount" value="${ productVO.amount }">
+				<input type="hidden" name="prod_no" value="${ productVO.prodNo }">
+				<input type="button" value="+">
+				<b id="limit"></b>
+			</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>상품이미지</strong></div>
+			<div class="col-xs-8 col-md-4">
+				<c:if test="${ count > 0 }">
+					<c:forEach var="i" items="${ uploadReturnList }" begin="0" step="1" end="${ count-1 }">
+						<div class="container">
+							<div class="col-md-12">
+								<img src="/images/uploadFiles/${ i.fileName }"/><br/>
+								${ i.fileName }<br/>
+							</div>
+						</div>
+					</c:forEach>
 				</c:if>
-				
-				<td width="17" height="23">
-					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>
-				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					이전
-				</td>
-				<td width="14" height="23">
-					<img src="/images/ct_btnbg03.gif" width="14" height="23">
-				</td>
-			</tr>
-		</table>
-
-		</td>
-	</tr>
-</table>
-</form>
+				<c:if test="${ count <= 0 }">
+				이미지없음
+				</c:if>
+			</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			<button type="button" class="btn btn-primary">장바구니 담기</button>
+	  			<button type="button" class="btn btn-primary">구매</button>
+	  			<button type="button" class="btn btn-primary">이전</button>
+	  		</div>
+		</div>
+		
+		<br/>
+		
+ 	</div>
+ 	<!--  화면구성 div Start /////////////////////////////////////-->
+	</form>
 
 </body>
+
 </html>

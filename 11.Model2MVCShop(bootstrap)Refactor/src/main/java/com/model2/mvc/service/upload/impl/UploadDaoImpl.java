@@ -1,6 +1,8 @@
 package com.model2.mvc.service.upload.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +36,12 @@ public class UploadDaoImpl implements UploadDao {
 	}
 
 	@Override
-	public void updateUpload(Upload upload) throws Exception {
-		System.out.println(getClass() + ".updateUpload(Upload upload) start...");
-		int i = sqlSession.update("UploadMapper.updateUpload", upload);
-		if( i == 1) {
-			System.out.println("업로드 파일 수정 성공");
-		}else {
-			System.out.println("업로드 파일 수정 실패");
-		}
+	public void deleteUpload(String fileNo, String deleteFileName) throws Exception {
+		System.out.println(getClass() + ".deleteUpload(String fileNo, String deleteFileName) start...");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fileNo", fileNo);
+		map.put("deleteFileName", deleteFileName);
+		sqlSession.delete("UploadMapper.deleteUpload", map);
 	}
 
 }

@@ -70,7 +70,7 @@ public class ProductRestController {
 	
 	@RequestMapping( value = "json/getProduct/{prodNo}/{menu}", method = RequestMethod.GET )
 	public Map<String, Object> getProduct(@PathVariable int prodNo, @PathVariable String menu) throws Exception {
-		System.out.println("/getProduct : GET");
+		System.out.println("json/getProduct : GET");
 		List<Upload> uploadList = uploadServiceImpl.getUploadFile(productServiceImpl.getProduct(prodNo).getFileName());		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("productVO", productServiceImpl.getProduct(prodNo));
@@ -80,66 +80,43 @@ public class ProductRestController {
 	}
 	
 	@RequestMapping( value = "autocompleteProduct", method = RequestMethod.POST )
-	public List<String> autocompleteProduct() throws Exception {
+	public List<String> autocompleteProduct( @RequestBody Search search) throws Exception {
 		System.out.println("/autocompleteProduct : POST");
-		return productServiceImpl.autocompleteProduct();
+		System.out.println(search);
+		return productServiceImpl.autocompleteProduct(search);
 	}
 	
 	@RequestMapping( value = "/json/listProduct", method = RequestMethod.POST )
-	public List<Map<String, Object>> listProduct( @RequestBody String menu, User user, Search search) throws Exception {
-		System.out.println("/product/listProduct : POST");
+	//public List<Map<String, Object>> listProduct( @RequestBody Search search, String menu) throws Exception {
+	public List<Product> listProduct( @RequestBody Search search) throws Exception {
+		System.out.println("/product/json/listProduct : POST");
 		System.out.println(search);
-		System.out.println(user);
-		System.out.println(menu);
 
-		// 상품검색 클릭했을때 currentPage는 null이다
-		int currentPage = 1;
-
-		// 상품검색 클릭시 null, 검색버튼 클릭시 nullString
-		if (search.getCurrentPage() != 0) {
-			currentPage = search.getCurrentPage();
-		}
-
-		// 판매상품관리 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환
-		String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
-		String searchCondition = CommonUtil.null2str(search.getSearchCondition());
-		
-		// 상품명과 상품가격에서 searchKeyword가 문자일때 nullString으로 변환
-		if (!searchCondition.trim().equals("1") && !CommonUtil.parsingCheck(searchKeyword)) {
-			searchKeyword = "";
-		}
-		search = new Search(currentPage, searchCondition, searchKeyword, pageSize, search.getPriceSort());
+		search = new Search(search.getCurrentPage(), search.getSearchCondition(), search.getSearchKeyword(), pageSize, search.getPriceSort());
 		
 		// 검색정보를 넣어서 현재 페이지의 list를 가져온다
 		List<Product> prodList = productServiceImpl.getProductList(search);		
-		int totalCount = productServiceImpl.getProductTotalCount(search);		
-		Page resultPage = new Page(currentPage, totalCount, pageUnit, pageSize);
 		
 		for (int i = 0; i < prodList.size(); i++) {
 			System.out.println(getClass() + " : " + prodList.get(i).toString());
 		}
 		
-		List<String> uploadList = new ArrayList<String>();
 		for (int i = 0; i < prodList.size(); i++) {
 			prodList.get(i).setFileName(uploadServiceImpl.getUploadFile(prodList.get(i).getFileName()).get(0).getFileName());
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("resultPage", resultPage);
 		map.put("searchVO", search);
 		map.put("list", prodList);
-		map.put("menu", menu);
 		List resultValue = new ArrayList();
-		resultValue.add(resultPage);
 		resultValue.add(search);
 		resultValue.add(prodList);
-		resultValue.add(resultPage);
 		
 		for (int i = 0; i < resultValue.size(); i++) {
 			System.out.println(resultValue.get(i));
 		}
 		
-		return resultValue;
+		return prodList;
 	}
 
 }

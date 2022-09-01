@@ -58,9 +58,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<String> autocompleteProduct() throws Exception {
-		System.out.println(getClass() + ".autocompleteProduct()");
-		return productDAO.autocompleteProduct();
+	public List<String> autocompleteProduct(Search search) throws Exception {
+		System.out.println(getClass() + ".autocompleteProduct(Search search)");
+		return productDAO.autocompleteProduct(search);
 	}
 
 }

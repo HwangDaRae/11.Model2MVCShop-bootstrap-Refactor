@@ -1,7 +1,10 @@
 package com.model2.mvc.view.product;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.common.util.CommonUtil;
+import com.model2.mvc.common.util.ProtocolUtil;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Upload;
 import com.model2.mvc.service.domain.User;
@@ -124,15 +128,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping( value = "listProduct", method = RequestMethod.POST )
-	public String listProduct( @RequestParam("menu") String menu, Model model, User user, HttpSession session, Search search) throws Exception {
+	//public String listProduct( @RequestParam("menu") String menu, Model model, User user, HttpSession session, Search search) throws Exception {
+	public String listProduct( @ModelAttribute Search search, @RequestParam("menu") String menu, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("/product/listProduct : POST");
-		
-		System.out.println(search);
-		System.out.println(user);
 		System.out.println(menu);
-		System.out.println(session.getAttribute("user"));
-		
-		
+		System.out.println(search);
+	
 		if(((User)session.getAttribute("user")).getUserId().equals("non-member")) {
 			//비회원 상품 검색 Anchor Tag 클릭
 			System.out.println("비회원으로 들어왔다");
@@ -184,7 +185,6 @@ public class ProductController {
 		return "forward:/product/listProduct.jsp";
 	}
 
-	/*
 	@RequestMapping( value = "getProduct/{prodNo}/{menu}", method = RequestMethod.GET )
 	public String getProduct(@PathVariable int prodNo, @PathVariable String menu, Model model ) throws Exception {
 		System.out.println("/getProduct : GET");
@@ -195,7 +195,6 @@ public class ProductController {
 		model.addAttribute("count", uploadList.get(0).getFileCount());
 		return "forward:/product/getProduct.jsp";
 	}
-	*/
 	
 	@RequestMapping( value = "addProductView", method = RequestMethod.GET )
 	public String addProductView() throws Exception {
@@ -216,13 +215,13 @@ public class ProductController {
 		String fileNo = sdf1.format( Calendar.getInstance().getTime() ) + "";
 		
 		for(int i = 0; i < multiFileList.size(); i++) {
-			multiFileList.get(i).transferTo(new File("C:\\Users\\903-19\\git\\10Model2-Ajax-Refactor\\10.Model2MVCShop(Ajax)Refactor\\src\\main\\webapp\\images\\uploadFiles\\",
+			multiFileList.get(i).transferTo(new File("C:\\Users\\903-19\\git\\11.Model2MVCShop-bootstrap-Refactor\\11.Model2MVCShop(bootstrap)Refactor\\src\\main\\webapp\\images\\uploadFiles\\",
 					multiFileList.get(i).getOriginalFilename()));
 			uploadVO = new Upload();
 			uploadVO.setFileNo(fileNo);
 			uploadVO.setFileCount(multiFileList.size());
 			uploadVO.setFileName(multiFileList.get(i).getOriginalFilename());
-			uploadVO.setFile_path("C:\\Users\\903-19\\git\\10Model2-Ajax-Refactor\\10.Model2MVCShop(Ajax)Refactor\\src\\main\\webapp\\images\\uploadFiles\\");
+			uploadVO.setFile_path("C:\\Users\\903-19\\git\\11.Model2MVCShop-bootstrap-Refactor\\11.Model2MVCShop(bootstrap)Refactor\\src\\main\\webapp\\images\\uploadFiles\\");
 			uploadList.add(uploadVO);
 		}
 		
@@ -244,57 +243,75 @@ public class ProductController {
 		System.out.println("/product/updateProductView : GET");
 		
 		Product productVO = productServiceImpl.getProduct(prodNo);
+		productVO.setManuDate(productVO.getManuDate().substring(0, 4) + "-" + productVO.getManuDate().substring(4, 6) + "-" + productVO.getManuDate().substring(6, 8));
+		
 		List<Upload> uploadList = uploadServiceImpl.getUploadFile(productVO.getFileName());
 		
 		model.addAttribute("productVO", productVO);
 		model.addAttribute("uploadList", uploadList);
 		model.addAttribute("count", uploadList.size());
 		
-		if( menu.equals("manage") && productVO.getProTranCode() == null ) {
-			return "forward:/product/updateProductView.jsp";
-		}else {
-			return "forward:/product/getProduct.jsp";
-		}
+		return "forward:/product/updateProductView.jsp";
 	}
 	
 	@RequestMapping(value = "updateProduct", method = RequestMethod.POST )
 	public String updateProduct(@ModelAttribute("productVO") Product productVO,
 								@RequestParam("uploadfile") List<MultipartFile> multiFileList,
+								@RequestParam("deleteFile") String[] deleteFile,
 								HttpServletRequest request,
 								Upload uploadVO,
 								ArrayList<Upload> uploadList ) throws Exception {
 		System.out.println("/product/updateProduct : POST");
 		
 		// File file = new File(경로 + 파일이름);
-		for(int i = 0; i < multiFileList.size(); i++) {
-			multiFileList.get(i).transferTo(new File("C:\\Users\\bitcamp\\git\\09Model2-jQuery-Refactor\\09.Model2MVCShop(jQuery)Refactor\\src\\main\\webapp\\images\\uploadFiles\\",
-					multiFileList.get(i).getOriginalFilename()));
-			uploadVO = new Upload();
-			uploadVO.setFileName(multiFileList.get(i).getOriginalFilename());
-			uploadVO.setFileNo(productVO.getFileName());
-			uploadVO.setFileCount(multiFileList.size());
-			uploadVO.setFile_path("C:\\Users\\bitcamp\\git\\09Model2-jQuery-Refactor\\09.Model2MVCShop(jQuery)Refactor\\src\\main\\webapp\\images\\uploadFiles\\");
-			
-			List<Upload> list = uploadServiceImpl.getUploadFile(productVO.getFileName());
-			if(multiFileList.size() >= list.size()) {
-				uploadVO.setBefore_fileName(list.get(i).getFileName());
-			}else {
-				uploadVO.setBefore_fileName("");
-			}			
-			System.out.println("하나의 upload : " + uploadVO);
-			
-			uploadList.add(uploadVO);	
-		}		
+		for (MultipartFile file : multiFileList) {
+			//수정 된 파일이 아니라면
+			if(!file.getOriginalFilename().equals("")) {
+				String path = "C:\\Users\\903-19\\git\\11.Model2MVCShop-bootstrap-Refactor\\11.Model2MVCShop(bootstrap)Refactor\\src\\main\\webapp\\images\\uploadFiles\\";
+				File saveFile = new File(path,file.getOriginalFilename());
+				
+				boolean isEists = saveFile.exists();
+				
+				//존재하지 않는 파일이라면 업로드한다.
+				if(!isEists) {
+					file.transferTo(saveFile);
+				}
+				uploadVO = new Upload();
+				uploadVO.setFileName(file.getOriginalFilename());
+				uploadVO.setFileNo(productVO.getFileName());
+				uploadVO.setFileCount(multiFileList.size());
+				uploadVO.setFile_path("C:\\Users\\903-19\\git\\11.Model2MVCShop-bootstrap-Refactor\\11.Model2MVCShop(bootstrap)Refactor\\src\\main\\webapp\\images\\uploadFiles\\");
+				
+				uploadList.add(uploadVO);				
+			}
+		}//end of for
 		
+		//상품 업데이트
 		productVO = productServiceImpl.updateProduct(productVO);
-		for (Upload upload : uploadList) {
-			uploadServiceImpl.updateUpload(upload);
+		if(deleteFile.length > 0) {
+			for (String deleteFileName : deleteFile) {
+				//파일 delete
+				uploadServiceImpl.deleteUpload(productVO.getFileName(),deleteFileName);
+			}
 		}
-		List<Upload> list = uploadServiceImpl.getUploadFile(uploadList.get(0).getFileNo());
+
+		if(uploadList.size() > 0) {
+			for (Upload upload : uploadList) {
+				//파일 insert
+				uploadServiceImpl.addUpload(upload);
+			}
+		}
+		
+		List<Upload> u_list = uploadServiceImpl.getUploadFile(uploadList.get(0).getFileNo());
+		for (Upload u : u_list) {
+			System.out.println(u);
+		}
+		
+		System.out.println(u_list.get(multiFileList.size()-1).getFileCount());
 		
 		request.setAttribute("productVO", productVO);
-		request.setAttribute("uploadList", list);
-		request.setAttribute("count", uploadVO.getFileCount());
+		request.setAttribute("uploadReturnList", u_list);
+		request.setAttribute("count", u_list.get(multiFileList.size()-1).getFileCount());
 		
 		return "forward:/product/getProduct.jsp";
 	}

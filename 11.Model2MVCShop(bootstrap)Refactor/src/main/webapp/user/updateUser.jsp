@@ -114,7 +114,7 @@
 	
 		<div class="page-header text-center">
 	       <h3 class=" text-info">회원정보수정</h3>
-	       <h5 class="text-muted">내 정보를 <!-- <strong class="text-danger">최신정보로 관리</strong> -->해 주세요.</h5>
+	       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
 	    </div>
 	    
 	    <!-- form Start /////////////////////////////////////-->

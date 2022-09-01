@@ -19,7 +19,7 @@ public interface ProductDao {
 	
 	public Product getNonMemberPurchase(int tranNo) throws Exception;
 	
-	public List<String> autocompleteProduct() throws Exception;
+	public List<String> autocompleteProduct(Search search) throws Exception;
 }
 
 

@@ -53,7 +53,7 @@
 		//============= 로그인 화면이동 =============
 		$( function() {
 			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('로 그 인')").on("click" , function() {
+			$("a[href='#']:contains('로 그 인')").on("click" , function() {
 				self.location = "/user/login"
 			});
 		});

@@ -25,10 +25,9 @@
 		WHERE fileNo = #{value}
 	</select>
 	
-	<update id="updateUpload" parameterType="com.model2.mvc.service.domain.Upload">
-		UPDATE upload_file
-		SET fileCount = #{fileCount}, fileName = #{fileName:VARCHAR}, file_path=#{file_path:VARCHAR}
-		WHERE fileNo = #{fileNo} AND fileName = #{before_fileName}
-	</update>
+	<delete id="deleteUpload" parameterType="map">
+		DELETE from upload_file
+		WHERE fileNo = #{fileNo} AND fileName = #{deleteFileName}
+	</delete>
 
 </mapper>

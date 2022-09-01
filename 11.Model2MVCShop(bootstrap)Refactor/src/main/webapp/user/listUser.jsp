@@ -114,8 +114,6 @@
 					
 			});
 			
-			
-			
 			//Autocomplete
 			$("#searchKeyword").bind("click",function(){
 				$.ajax(
@@ -137,8 +135,6 @@
 							}
 						});
 			});
-			
-			
 			
 			//==> userId LINK Event End User 에게 보일수 있도록 
 			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");

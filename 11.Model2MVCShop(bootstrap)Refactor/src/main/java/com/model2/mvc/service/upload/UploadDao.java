@@ -10,6 +10,6 @@ public interface UploadDao {
 	
 	public List<Upload> getUploadFile(String fileNo) throws Exception;
 	
-	public void updateUpload(Upload upload) throws Exception;
+	public void deleteUpload(String fileNo, String deleteFileName) throws Exception;
 
 }

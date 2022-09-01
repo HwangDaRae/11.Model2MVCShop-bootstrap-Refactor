@@ -21,22 +21,25 @@ public class UploadServiceImpl implements UploadService {
 		System.out.println(getClass() + " default Constructor");
 	}
 
+	//상품 추가, 수정 할 때 쓴다
 	@Override
 	public void addUpload(Upload upload) throws Exception {
 		System.out.println(getClass() + ".addUpload(Upload upload) start...");
 		UploadDaoImpl.addUpload(upload);
 	}
 
+	//list display 할 때 많이 사용된다
 	@Override
 	public List<Upload> getUploadFile(String fileNo) throws Exception {
 		System.out.println(getClass() + ".getUploadFile(String fileNo) start...");
 		return UploadDaoImpl.getUploadFile(fileNo);
 	}
 
+	//파일 업데이트 할 때 먼저 fileNo에 맞는 데이터를 전제 삭제한다
 	@Override
-	public void updateUpload(Upload upload) throws Exception {
-		System.out.println(getClass() + ".updateUpload(Upload upload) start...");
-		UploadDaoImpl.updateUpload(upload);
+	public void deleteUpload(String fileNo, String deleteFileName) throws Exception {
+		System.out.println(getClass() + ".deleteUpload(String fileNo, String deleteFileName) start...");
+		UploadDaoImpl.deleteUpload(fileNo, deleteFileName);
 	}
 
 }

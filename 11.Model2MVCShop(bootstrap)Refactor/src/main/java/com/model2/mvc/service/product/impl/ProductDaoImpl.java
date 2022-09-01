@@ -72,9 +72,9 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public List<String> autocompleteProduct() throws Exception {
-		System.out.println(getClass() + ".autocompleteProduct()");
-		return sqlSession.selectList("ProductMapper.autocompleteProduct");
+	public List<String> autocompleteProduct(Search search) throws Exception {
+		System.out.println(getClass() + ".autocompleteProduct(Search search)");
+		return sqlSession.selectList("ProductMapper.autocompleteProduct", search);
 	}
 
 }
