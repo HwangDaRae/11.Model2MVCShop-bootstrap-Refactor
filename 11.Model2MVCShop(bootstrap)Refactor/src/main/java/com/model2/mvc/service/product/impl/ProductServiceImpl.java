@@ -63,4 +63,11 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.autocompleteProduct(search);
 	}
 
+	// 배송관리
+	@Override
+	public List<Product> getdeliveryManageList(Search searchVO) throws Exception {
+		System.out.println(getClass() + ".getdeliveryManageList(Search search)");
+		return productDAO.getdeliveryManageList(searchVO);
+	}
+
 }

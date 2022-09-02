@@ -113,6 +113,10 @@ $(function(){
 		$("#checkCount").text(checkCount);
 	})
 	
+	$("button").bind("click", function(){
+		location.href = "/product/listProduct/search";
+	});
+	
 })
 </script>
 </head>
@@ -143,6 +147,7 @@ $(function(){
 							<b id="checkCount">0</b>&nbsp;/&nbsp;${ count }</a>&nbsp;&nbsp;
 						<input type="button" value="선택 삭제">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="button" value="구매">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button">리스트로 이동</button>
 					</td>
 
 				</tr>

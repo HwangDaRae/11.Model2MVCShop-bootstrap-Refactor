@@ -20,4 +20,6 @@ public interface ProductService {
 	public Product getNonMemberPurchase(int tranNo) throws Exception;
 	
 	public List<String> autocompleteProduct(Search search) throws Exception;
+	
+	public List<Product> getdeliveryManageList(Search searchVO) throws Exception;
 }

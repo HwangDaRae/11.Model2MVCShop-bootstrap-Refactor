@@ -10,7 +10,7 @@
 
 <script type="text/javascript">
 $(function(){
-	$("b").bind("click",function(){
+	$("b").bind("click", function(){
 		var id = $(this).parent().parent().attr("id")
 		if( $(this).text().trim() == '물건도착' ){
 			location.href="/purchase/updateTranCode?tranNo="
@@ -21,6 +21,10 @@ $(function(){
 			location.href="/user/getUser?userId=${ list[i].buyer.userId }";
 		}
 	})
+	
+	$("button").bind("click", function(){
+		location.href = "/product/listProduct/search";
+	});
 });
 </script>
 
@@ -56,7 +60,9 @@ function fncGetList(currentPage) {
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
 	<tr>
-		<td colspan="11">전체 ${ resultPage.totalCount } 건수, 현재 ${ resultPage.currentPage } 페이지</td>
+		<td colspan="11">전체 ${ resultPage.totalCount } 건수, 현재 ${ resultPage.currentPage } 페이지
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button">리스트로 이동</button>
+		</td>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>

@@ -77,4 +77,10 @@ public class ProductDaoImpl implements ProductDao {
 		return sqlSession.selectList("ProductMapper.autocompleteProduct", search);
 	}
 
+	// 배송관리
+	@Override
+	public List<Product> getdeliveryManageList(Search searchVO) throws Exception {
+		return sqlSession.selectList("ProductMapper.getdeliveryManageList", searchVO);
+	}
+
 }

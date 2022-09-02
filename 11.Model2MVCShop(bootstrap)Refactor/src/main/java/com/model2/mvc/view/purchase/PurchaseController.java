@@ -83,7 +83,12 @@ public class PurchaseController {
 		searchVO.setPageSize(pageSize);
 		
 		List<Purchase> purchaseList = purchaseServiceImpl.getPurchaseList(searchVO, userId);
+		//List<Purchase> purchaseList = purchaseServiceImpl.getdeliveryManageList(searchVO);
 		int count = purchaseServiceImpl.totalCountPurchaseList(userId);
+		//int count = 0;
+		//if(purchaseList != null) {
+		//	count = purchaseList.size();
+		//}
 		
 		Page resultPage = new Page(currentPage, count, pageUnit, pageSize);
 		
@@ -97,60 +102,35 @@ public class PurchaseController {
 	
 	@RequestMapping( value = "deliveryManage/{menu}", method = RequestMethod.GET )
 	//public String listProduct( @RequestParam("menu") String menu, Model model, User user, HttpSession session, Search search) throws Exception {
-	public String deliveryManage( Search search, @PathVariable("menu") String menu, Model model, HttpSession session, HttpServletRequest request) throws Exception {
-		System.out.println("/product/listProduct : POST");
-		System.out.println(menu);
-		System.out.println(search);
-	
-		if(((User)session.getAttribute("user")).getUserId().equals("non-member")) {
-			//비회원 상품 검색 Anchor Tag 클릭
-			System.out.println("비회원으로 들어왔다");
-		}else if(((User)session.getAttribute("user")).getRole().equals("admin")) {
-			System.out.println("admin계정으로 들어왔다");
-		}else {
-			System.out.println("user계정으로 들어왔다");
-		}
-
-		// 상품검색 클릭했을때 currentPage는 null이다
+	public ModelAndView deliveryManage( Search search, @PathVariable("menu") String menu, Model model, HttpSession session, HttpServletRequest request) throws Exception {
+		System.out.println("/purchase/deliveryManage : GET");
+		Search searchVO = new Search();
+		
+		String userId = ((User)session.getAttribute("user")).getUserId();
+		
 		int currentPage = 1;
-
-		// 상품검색 클릭시 null, 검색버튼 클릭시 nullString
-		if (search.getCurrentPage() != 0) {
-			currentPage = search.getCurrentPage();
+		if(searchVO.getCurrentPage() != 0) {
+			currentPage = searchVO.getCurrentPage();
 		}
-
-		// 판매상품관리 클릭시 searchKeyword, searchCondition 둘 다 null ==> nullString 으로 변환
-		String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
-		String searchCondition = CommonUtil.null2str(search.getSearchCondition());
+		searchVO.setCurrentPage(currentPage);
+		searchVO.setPageSize(pageSize);
 		
-		// 상품명과 상품가격에서 searchKeyword가 문자일때 nullString으로 변환
-		if (!searchCondition.trim().equals("1") && !CommonUtil.parsingCheck(searchKeyword)) {
-			searchKeyword = "";
-		}
-		search = new Search(currentPage, searchCondition, searchKeyword, pageSize, search.getPriceSort());
-		
-		// 검색정보를 넣어서 현재 페이지의 list를 가져온다
-		List<Product> prodList = productServiceImpl.getProductList(search);		
-		int totalCount = productServiceImpl.getProductTotalCount(search);		
-		Page resultPage = new Page(currentPage, totalCount, pageUnit, pageSize);
-		
-		for (int i = 0; i < prodList.size(); i++) {
-			System.out.println(getClass() + " : " + prodList.get(i).toString());
+		//List<Purchase> purchaseList = purchaseServiceImpl.getPurchaseList(searchVO, userId);
+		List<Product> prodList = productServiceImpl.getdeliveryManageList(searchVO);
+		//int count = purchaseServiceImpl.totalCountPurchaseList(userId);
+		int count = 0;
+		if(prodList != null) {
+			count = prodList.size();
 		}
 		
-		List<String> uploadList = new ArrayList<String>();
-		for (int i = 0; i < prodList.size(); i++) {
-			uploadList.add(uploadServiceImpl.getUploadFile(prodList.get(i).getFileName()).get(0).getFileName());
-		}
+		Page resultPage = new Page(currentPage, count, pageUnit, pageSize);
 		
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("searchVO", search);
 		model.addAttribute("list", prodList);
-		model.addAttribute("listSize", prodList.size());
-		model.addAttribute("uploadList", uploadList);
-		model.addAttribute("menu", menu);
-		
-		return "forward:/purchase/deliveryManage.jsp";
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("searVO", searchVO);
+		model.addAttribute("userId", userId);
+
+		return new ModelAndView("/purchase/deliveryManage.jsp", "model", model);
 	}
 	
 	@RequestMapping(value = "listPurchase", method = RequestMethod.POST )
@@ -360,11 +340,18 @@ public class PurchaseController {
 			uploadList.add(uploadServiceImpl.getUploadFile(prodList.get(i).getFileName()).get(0).getFileName());
 		}
 		
+		List<Upload> uploadL = new ArrayList<Upload>();
 		for (int i = 0; i < uploadList.size(); i++) {
 			System.out.println("어떻게 나오나 " + uploadList.get(i));
+			uploadL = new ArrayList<Upload>();
+			Upload u = new Upload();
+			u.setFileName(uploadList.get(i));
+			uploadL.add(u);
 		}
+
 		
-		model.addAttribute("uploadList", uploadList);
+		
+		model.addAttribute("uploadList", uploadL);
 		model.addAttribute("count", uploadList.size());
 		model.addAttribute("list", list);
 		model.addAttribute("prodList", prodList);
@@ -477,7 +464,8 @@ public class PurchaseController {
 		searchVO.setCurrentPage(currentPage);
 		searchVO.setPageSize(pageSize);
 
-		List<Product> prodList = productServiceImpl.getProductList(searchVO);		
+		//List<Product> prodList = productServiceImpl.getProductList(searchVO);
+		List<Product> prodList = productServiceImpl.getdeliveryManageList(searchVO);
 		Page resultPage = new Page(currentPage, productServiceImpl.getProductTotalCount(searchVO), pageUnit, pageSize);
 		
 		model.addAttribute("list", prodList);

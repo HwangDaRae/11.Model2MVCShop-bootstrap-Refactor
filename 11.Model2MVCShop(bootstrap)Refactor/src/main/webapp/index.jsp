@@ -309,11 +309,11 @@
 			<div class="col-md-3">
 		        
 		       	<!--  회원관리 목록에 제목 -->
-				<!-- <div class="panel panel-primary">
+				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<i class="glyphicon glyphicon-heart"></i> 회원관리
          			</div>
-         			 회원관리 아이템
+         			 <!-- 회원관리 아이템 -->
 					<ul class="list-group">
 						 <li class="list-group-item">
 						 	<a href="#">개인정보조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
@@ -322,10 +322,10 @@
 						 	<a href="#">회원정보조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 					</ul>
-		        </div> -->
+		        </div>
                
                
-				<!-- <div class="panel panel-primary">
+				<div class="panel panel-primary">
 					<div class="panel-heading">
 							<i class="glyphicon glyphicon-briefcase"></i> 판매상품관리
          			</div>
@@ -337,10 +337,10 @@
 						 	<a href="#">판매상품관리</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 					</ul>
-		        </div> -->
+		        </div>
                
                
-				<div class="panel panel-primary">
+				<!-- <div class="panel panel-primary">
 					<div class="panel-heading">
 							<i class="glyphicon glyphicon-shopping-cart"></i> 비회원
 	    			</div>
@@ -353,7 +353,7 @@
 						 	<a href="/cart/listCart">장바구니</a></i>
 						 </li>
 					</ul>
-				</div>
+				</div> -->
 				
 			</div>
 			<!--  Menu 구성 end /////////////////////////////////////-->   

@@ -68,11 +68,4 @@ public class PurchaseServiceImpl implements PurchaseService {
 		purchaseDao.updateTranCode(map);
 	}
 
-	// 배송관리
-	@Override
-	public void getdeliveryManageList() throws Exception {
-		System.out.println("PurchaseServiceImpl getdeliveryManageList() start...");
-		purchaseDao.getdeliveryManageList();
-	}
-
 }

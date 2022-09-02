@@ -81,17 +81,6 @@
 						ORDER BY order_data DESC ) vt1 ) vt2
 		WHERE r BETWEEN ((#{search.currentPage}-1)*#{search.pageSize}+1) AND #{search.currentPage}*#{search.pageSize}
 	</select>
-
-
-  	
-	<select id="getdeliveryManageList" resultMap="purchaseSelectMap">
-		SELECT *
-		FROM ( SELECT ROWNUM r, vt1.*
-				FROM ( SELECT *
-						FROM transaction
-						ORDER BY order_data DESC ) vt1 ) vt2
-		WHERE r BETWEEN ((#{search.currentPage}-1)*#{search.pageSize}+1) AND #{search.currentPage}*#{search.pageSize}
-	</select>
 	
 
 				

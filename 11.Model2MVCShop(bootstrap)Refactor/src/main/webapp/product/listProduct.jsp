@@ -80,9 +80,15 @@
 			});
 			
 			//무한페이징
-			page = 1;
+			page = 0;
+			
 			$(window).scroll(function() {
-				if ($(document).height() - 1100 <= parseInt($(window).scrollTop()) ){
+				var maxHeight = $(document).height();
+				var currentScroll = Math.ceil($(window).scrollTop() + $(window).height());
+				if(currentScroll >= maxHeight) {
+					//현재페이지 증가
+					page++;
+				//if ($(document).height() - 1200 <= parseInt($(window).scrollTop()) ){
 					searchCondition = $("option:selected").val();
 					searchKeyword = $("input[name='searchKeyword']").val();
 					priceSort = $("input[name='priceSort']").val();
@@ -105,31 +111,34 @@
 									"Accept" : "application/json",
 									"Content-Type" : "application/json"
 								},
-								success : function(item, status) {
+								success : function( item, status) {
 									//alert(status);
 									$.each(item, function(index, item){
 										
 										//form의 3번째 자식 table에 붙인다
 										var displayValue = "<div class='col-md-4'>"
 																+"<a href='javascript:getProductGo("+item.prodNo+")'>"
-																	+"<img src='/images/uploadFiles/"+item.fileName+"' height='300' width='300'>"
+																	+"<img src='/images/uploadFiles/"+item.fileName+"' height='350' width='350'>"
 																+"</a>"
 																+"<p align='center' style='font-size: 30px'>"+item.prodName+"</p>"
 																+"<p align='center' style='font-size: 20px'>"+item.prodDetail+"</p>"
 																+"<p align='center' style='font-size: 20px; color: red;'>"+item.price+"원</p>"
 															+"</div>";
 												console.log("displayValue : " + displayValue);
+												//alert("displayValue : " + displayValue);
 												$("#container").append(displayValue);
 												
 								});//$.each
-								
+
 							}//success
 			    		});//end of ajax
-					//현재페이지 증가
-					page++;
-			    		
+
 			    	}//end of if
+				//현재페이지 증가
+				//page++;
+
 			    });//end of scroll
+
 		});
 		
 		//썸네일 클릭시 상세상품조회 페이지 or 상품수정 페이지로 이동
@@ -223,7 +232,7 @@
 		<c:forEach var="i" begin="0" end="${ size-1 }" step="1">
 			<div class="col-md-4">
 				<a href="javascript:getProductGo('${ list[i].prodNo }')">
-					<img src="/images/uploadFiles/${ uploadList[i] }" height="300" width="300">
+					<img src="/images/uploadFiles/${ uploadList[i] }" height="350" width="350">
 				</a>
 				<p align="center" style="font-size: 30px">${ list[i].prodName }</p>
 				<p align="center" style="font-size: 20px">${ list[i].prodDetail }</p>

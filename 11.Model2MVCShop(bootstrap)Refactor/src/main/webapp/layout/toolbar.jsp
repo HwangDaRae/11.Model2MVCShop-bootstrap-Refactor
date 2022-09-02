@@ -48,9 +48,15 @@
 		}); 
 		
 	 	$( "a:contains('배 송 관 리')" ).on("click" , function() {
-	 		self.location = "/purchase/deliveryManage/search";
+	 		location.href = "/purchase/deliveryManage/search";
 		});
 	});
+		
+		$(function(){
+			$( "a:contains('장 바 구 니')" ).on("click" , function() {
+		 		location.href = "/cart/listCart";
+			});
+		});
 		
 </script>
 
@@ -133,6 +139,21 @@
 						<li><a href="#">etc..</a></li>
 					</ul>
 				</li>
+				
+				<!-- 장바구니 DrowDown -->
+				<!-- <li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<span>장바구니</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#">장 바 구 니</a></li>
+
+						<li><a href="#">최근본상품</a></li>
+						<li class="divider"></li>
+						<li><a href="#">etc..</a></li>
+					</ul>
+				</li> -->
 
 				<li><a href="#">etc...</a></li>
 			</ul>
