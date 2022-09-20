@@ -315,6 +315,12 @@ public class ProductController {
 		
 		return "forward:/product/getProduct.jsp";
 	}
+	
+	@RequestMapping(value = "listCalendar", method = RequestMethod.GET )
+	public String listCalendar() throws Exception {
+		System.out.println("/product/listCalendar : GET");		
+		return "forward:/product/listCalendar.jsp";
+	}
 
 }
 

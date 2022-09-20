@@ -28,7 +28,8 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    <!-- calendar.js -->
    <script type="text/javascript" src="/javascript/calendar.js"></script>
-	
+   <!-- import.payment.js -->
+   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
  		body {
@@ -37,6 +38,65 @@
      </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
+     <!-- import를 사용하기 위함 -->
+     <script type="text/javascript">
+     function requestPayment(){
+    	 alert('여기로 오나?');
+    	 IMP.init("imp83557107"); // 가맹점 식별코드
+         IMP.request_pay({
+        	//신용카드 결제
+			/*
+        	pg : 'danal_tpay',
+			pay_method : 'card',
+			merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+			name : '최초인증결제',
+			amount : 0,
+			customer_uid : 'your-customer-unique-id', // 필수 입력.
+			buyer_email : 'iamport@siot.do',
+			buyer_name : '아임포트',
+			buyer_tel : '02-1234-1234'
+			*/
+			
+			//카카오페이
+			/*
+   			pg : 'kakaopay',
+			pay_method : 'card',
+			merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+			name : '최초인증결제',
+			amount : 10,
+			customer_uid : 'your-customer-unique-id', // 필수 입력.
+			buyer_email : 'iamport@siot.do',
+			buyer_name : '아임포트',
+			buyer_tel : '02-1234-1234'
+			*/
+			
+			//네이버페이
+			
+			
+			//무통장 입금
+			/*
+			pg : 'chai',
+			pay_method : 'trans',
+			
+			merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+			name : '최초인증결제',
+			amount : 10,
+			customer_uid : 'your-customer-unique-id', // 필수 입력.
+			buyer_email : 'iamport@siot.do',
+			buyer_name : '아임포트',
+			buyer_tel : '02-1234-1234'
+			*/
+     	}, function(response) {
+     		//결제 후 호출되는 callback함수
+     		if ( response.success ) { //결제 성공
+     			alert("결제성공 : " + response);
+     		} else {
+     			alert('결제실패 : ' + response.error_msg);
+     		}
+     	})
+     }
+     </script>
+     
 	<script type="text/javascript">
 		$(function(){
 			var productAmount = $("#productAmount").val();
@@ -65,7 +125,10 @@
 			})
 			
 			$("button:contains('구매완료')").bind("click",function(){
-				$("form").attr("method","post").attr("action","/purchase/addPurchase").submit();
+				//$("form").attr("method","post").attr("action","/purchase/addPurchase").submit();
+				//import로 구매하기
+				alert('구매완료 클릭');
+				requestPayment();
 			});
 			
 			$("button:contains('이전')").bind("click",function(){

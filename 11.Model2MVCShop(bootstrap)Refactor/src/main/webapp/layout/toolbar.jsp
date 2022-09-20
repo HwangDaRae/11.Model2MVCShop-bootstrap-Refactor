@@ -6,38 +6,38 @@
 
 <script type="text/javascript">
 	
-		//============= logout Event  처리 =============	
-		 $(function() {
-		 	$("a:contains('로그아웃')").on("click" , function() {
-				$(self.location).attr("href","/user/logout");
-				//self.location = "/user/logout"
-			}); 
-		 });
-		
-		//============= 회원관리 Event  처리 =============
-		 $(function() {
-		 	$("a:contains('회원정보조회')").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/user/listUser"
-			}); 
-		
-		 	$( "a:contains('개인정보조회')" ).on("click" , function() {
-				$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
-			});
-		 });
-
-			//============= 판매상품관리 Event  처리 =============
-		$(function() {
-		 	$( "a:contains('판매상품등록')" ).on("click" , function() {
-				$(self.location).attr("href","/product/addProductView");
-			});
-			
-		 	$( "a:contains('판매상품관리')" ).on("click" , function() {
-				$(self.location).attr("href","/product/listProduct/manage");
-			});
+	//============= logout Event  처리 =============	
+	 $(function() {
+	 	$("a:contains('로그아웃')").on("click" , function() {
+			$(self.location).attr("href","/user/logout");
+			//self.location = "/user/logout"
+		}); 
+	 });
+	
+	//============= 회원관리 Event  처리 =============
+	 $(function() {
+	 	$("a:contains('회원정보조회')").on("click" , function() {
+			//$(self.location).attr("href","/user/logout");
+			self.location = "/user/listUser"
+		}); 
+	
+	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
+			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
+	 });
 
-		//============= 상품구매 Event  처리 =============
+	//============= 판매상품관리 Event  처리 =============
+	$(function() {
+	 	$( "a:contains('판매상품등록')" ).on("click" , function() {
+			$(self.location).attr("href","/product/addProductView");
+		});
+		
+	 	$( "a:contains('판매상품관리')" ).on("click" , function() {
+			$(self.location).attr("href","/product/listProduct/manage");
+		});
+	});
+
+	//============= 상품구매 Event  처리 =============
 	$(function() {
 	 	$( "a:contains('상 품 검 색')" ).on("click" , function() {
 			$(self.location).attr("href","/product/listProduct/search");
@@ -51,12 +51,19 @@
 	 		location.href = "/purchase/deliveryManage/search";
 		});
 	});
-		
-		$(function(){
-			$( "a:contains('장 바 구 니')" ).on("click" , function() {
-		 		location.href = "/cart/listCart";
-			});
+
+	//============= 달력 Event  처리 =============
+	$(function() {
+	 	$( "a:contains('달 력')" ).on("click" , function() {
+			$(self.location).attr("href","/product/listCalendar");
 		});
+	});
+	
+	$(function(){
+		$( "a:contains('장 바 구 니')" ).on("click" , function() {
+	 		location.href = "/cart/listCart";
+		});
+	});
 		
 </script>
 
@@ -135,6 +142,20 @@
 						</c:if>
 
 						<!-- <li><a href="#">최근본상품</a></li> -->
+						<li class="divider"></li>
+						<li><a href="#">etc..</a></li>
+					</ul>
+				</li>
+
+				<!-- 달력, 날씨 DrowDown -->
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<span>달력</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#">달 력</a></li>
+
 						<li class="divider"></li>
 						<li><a href="#">etc..</a></li>
 					</ul>
