@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.cart.CartService;
+import com.model2.mvc.service.domain.Pay;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.domain.Upload;
@@ -67,5 +69,11 @@ public class PurchaseRestController {
 	
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
+	
+	@RequestMapping( value = "json/complete", method = RequestMethod.POST )
+	public void complete( @RequestBody Pay pay) throws Exception {
+		System.out.println("/complete : POST");
+		System.out.println(pay);
+	}
 
 }

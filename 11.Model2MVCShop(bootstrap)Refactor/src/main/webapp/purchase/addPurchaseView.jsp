@@ -44,56 +44,114 @@
     	 alert('여기로 오나?');
     	 IMP.init("imp83557107"); // 가맹점 식별코드
          IMP.request_pay({
+        	//pay_method : card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
         	//신용카드 결제
 			/*
-        	pg : 'danal_tpay',
-			pay_method : 'card',
-			merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
-			name : '최초인증결제',
-			amount : 0,
-			customer_uid : 'your-customer-unique-id', // 필수 입력.
-			buyer_email : 'iamport@siot.do',
-			buyer_name : '아임포트',
-			buyer_tel : '02-1234-1234'
+	        	pg : 'danal_tpay',
+				pay_method : 'card',
+				merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+				name : '최초인증결제',
+				amount : 100,
+				customer_uid : 'your-customer-unique-id', // 필수 입력.
+				buyer_email : 'iamport@siot.do',
+				buyer_name : '아임포트',
+				buyer_tel : '02-1234-1234'
 			*/
 			
 			//카카오페이
 			/*
-   			pg : 'kakaopay',
-			pay_method : 'card',
-			merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
-			name : '최초인증결제',
-			amount : 10,
-			customer_uid : 'your-customer-unique-id', // 필수 입력.
-			buyer_email : 'iamport@siot.do',
-			buyer_name : '아임포트',
-			buyer_tel : '02-1234-1234'
+	   			pg : 'kakaopay',
+				pay_method : 'card',
+				merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+				name : '최초인증결제',
+				amount : 100,
+				customer_uid : 'your-customer-unique-id', // 필수 입력.
+				buyer_email : 'iamport@siot.do',
+				buyer_name : '아임포트',
+				buyer_tel : '02-1234-1234'
+			*/
+			
+			//휴대폰결제
+			/*
+			    pg : 'html5_inicis',
+			    pay_method : 'phone',
+			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
+			    name : '주문명:결제테스트',
+			    amount : 100,
+			    buyer_email : 'iamport@siot.do',
+			    buyer_name : '구매자이름',
+			    buyer_tel : '010-1234-5678',
+			    buyer_addr : '서울특별시 강남구 삼성동',
+			    buyer_postcode : '123-456',
+			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
+			*/
+			
+			//무통장 입금
+			///*
+			    pg : 'html5_inicis',
+			    pay_method : 'vbank',
+			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
+			    name : '주문명:결제테스트',
+			    amount : 100,
+			    buyer_email : 'iamport@siot.do',
+			    buyer_name : '구매자이름',
+			    buyer_tel : '010-1234-5678',
+			    buyer_addr : '서울특별시 강남구 삼성동',
+			    buyer_postcode : '123-456',
+			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
+			//*/
+			
+			//토스페이
+			/*
+			    pg : 'tosspay',
+			    pay_method : 'card',
+			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
+			    name : '주문명:결제테스트',
+			    amount : 100,
+			    buyer_email : 'iamport@siot.do',
+			    buyer_name : '구매자이름',
+			    buyer_tel : '010-1234-5678',
+			    buyer_addr : '서울특별시 강남구 삼성동',
+			    buyer_postcode : '123-456',
+			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile	
+			*/
+			
+			//실시간 계좌이체
+			/*
+			    pg : 'html5_inicis',
+			    pay_method : 'trans',
+			    merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
+			    name : '주문명:결제테스트',
+			    amount : 100,
+			    buyer_email : 'iamport@siot.do',
+			    buyer_name : '구매자이름',
+			    buyer_tel : '010-1234-5678',
+			    buyer_addr : '서울특별시 강남구 삼성동',
+			    buyer_postcode : '123-456',
+			    m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
 			*/
 			
 			//네이버페이
 			
 			
-			//무통장 입금
-			/*
-			pg : 'chai',
-			pay_method : 'trans',
-			
-			merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
-			name : '최초인증결제',
-			amount : 10,
-			customer_uid : 'your-customer-unique-id', // 필수 입력.
-			buyer_email : 'iamport@siot.do',
-			buyer_name : '아임포트',
-			buyer_tel : '02-1234-1234'
-			*/
-     	}, function(response) {
-     		//결제 후 호출되는 callback함수
-     		if ( response.success ) { //결제 성공
-     			alert("결제성공 : " + response);
-     		} else {
-     			alert('결제실패 : ' + response.error_msg);
-     		}
-     	})
+         }, function (rsp) { // callback
+             if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+               // jQuery로 HTTP 요청
+               jQuery.ajax({
+                   url: "json/complete", // 예: https://www.myservice.com/payments/complete
+                   method: "POST",
+                   headers: { "Content-Type": "application/json" },
+                   data: JSON.stringify({
+                       imp_uid: rsp.imp_uid,
+                       merchant_uid: rsp.merchant_uid
+                   })
+               }).done(function (data) {
+                 // 가맹점 서버 결제 API 성공시 로직
+               })
+             } else {
+               alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+             }
+           });
      }
      </script>
      
