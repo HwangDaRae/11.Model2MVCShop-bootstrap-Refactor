@@ -72,7 +72,7 @@ public class PurchaseRestController {
 	
 	@RequestMapping( value = "json/complete", method = RequestMethod.POST )
 	public void complete( @RequestBody Pay pay) throws Exception {
-		System.out.println("/complete : POST");
+		System.out.println("json/complete : POST");
 		System.out.println(pay);
 	}
 
